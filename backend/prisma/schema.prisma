@@ -1,0 +1,46 @@
+// this is your prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// get a free hosted postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id               Int       @id @default(autoincrement())
+  username         String    @unique
+  name             String
+  password         String
+
+  friends          User[]    @relation("UserFriends")
+  friendOf         User[]    @relation("UserFriends")
+
+  sentRequests     User[]    @relation("FriendRequests")
+  receivedRequests User[]    @relation("FriendRequests")
+
+  channels         Channel[]
+  messages         Message[]
+}
+
+model Channel {
+  id       Int       @id @default(autoincrement())
+  members  User[]
+  messages Message[]
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   Int
+
+  channel    Channel  @relation(fields: [channelId], references: [id])
+  channelId  Int
+  created_at DateTime @default(now())
+}
