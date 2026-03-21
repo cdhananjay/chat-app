@@ -21,6 +21,7 @@ const requiredLoggedIn= async (req: Request, res: Response, next: NextFunction) 
             message: "user had invalid cookies which are now cleared, login again",
         })
     }
+    req.user = user;
     next();
 }
 
