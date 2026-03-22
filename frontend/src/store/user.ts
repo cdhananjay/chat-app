@@ -5,7 +5,7 @@ type UserState = {
     setUser: (user: UserInfo) => void;
 }
 
-type UserInfo = {
+export type UserInfo = {
     id: number,
     name: string,
     username: string,

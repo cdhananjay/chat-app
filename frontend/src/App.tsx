@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage";
 import { Toaster } from "@/components/ui/sonner"
 import {ProtectedRoute} from "@/ProtectedRoute.tsx";
 import axios from 'axios'
+import { ThemeProvider } from "@/components/theme-provider"
 export const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URL + "/api",
     withCredentials: true,
@@ -15,7 +16,7 @@ export const axiosInstance = axios.create({
 
 function App() {
     return (
-        <>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <BrowserRouter>
                 <Routes>
                     <Route element={<ProtectedRoute/>}>
@@ -26,7 +27,7 @@ function App() {
                 </Routes>
             </BrowserRouter>
             <Toaster />
-        </>
+        </ThemeProvider>
     )
 }
 
